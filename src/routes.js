@@ -4,7 +4,9 @@ import UserController from './app/controllers/UserController';
 import multerConfig from './config/multer';
 import SessionController from './app/controllers/SessionController';
 import authMiddleware from './app/middlewares/auth';
+import adminMiddleware from './app/middlewares/admin';
 import ScheduleController from './app/controllers/ScheduleController';
+import SolicitationsController from './app/controllers/SolicitationsController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -40,5 +42,11 @@ routes.put(
   ]),
   UserController.update
 );
+
+routes.use(adminMiddleware);
+
+routes.post('/solicitations', SolicitationsController.store);
+routes.delete('/solicitations', SolicitationsController.delete);
+routes.get('/solicitations', SolicitationsController.index);
 
 export default routes;
